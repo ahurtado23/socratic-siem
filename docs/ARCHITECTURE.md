@@ -28,19 +28,19 @@ Connector details, Add Source, user profiles, and rule details all reuse one mod
 
 Clicking the dimmed backdrop closes the modal; clicking inside it doesn't (because the click target check only matches the overlay itself).
 
-## Data-driven rendering
+## Data driven rendering
 
 Content for the Connectors, Rule Library, and Access Control pages lives in plain JS arrays of objects near the bottom of the `<script>` block:
 
 - `connectorData` — data sources shown on the Connectors page
-- `ruleData` — detection rules shown on the Rule Library page (see [DETECTION-LOGIC.md](DETECTION-LOGIC.md))
+- `ruleData` — detection rules shown on the Rule Library page
 - `rbacRoleInfo`, `rbacPerms`, `rbacUsers` — roles/permissions/users on the Access Control page
 
 Each is rendered with `array.map(...).join('')` into a container's `innerHTML`. To add or edit an entry, edit the array — the render functions don't need to change.
 
 ## Charts
 
-All charts are inline SVG (sparklines, donut/pie via `stroke-dasharray`/`stroke-dashoffset`, bar/area fills) — there's no charting library. This keeps the file dependency-free at the cost of writing SVG math by hand.
+All charts are inline SVG (sparklines, donut/pie via `stroke-dasharray`/`stroke-dashoffset`, bar/area fills) — there's no charting library. This keeps the file dependency free at the cost of writing SVG math by hand.
 
 ## Images
 

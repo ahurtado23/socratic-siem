@@ -1,6 +1,6 @@
 # SOCratic Method — SIEM Selection Console
 
-A single-page, interactive console that walks through how to choose the right SIEM for your org — built as a live talk-track companion, not a slide deck.
+A single page, interactive console that walks through how to choose the right SIEM for your org — built as a live talk track companion, not a slide deck.
 
 **Live demo:** https://ahurtado23.github.io/socratic-siem/ (password protected — ask Alex for access)
 
@@ -14,10 +14,10 @@ It's a presentation tool first — every "connector," "rule," and "user" on scre
 
 - **Overview** — session summary and content covered
 - **Dashboard** — sample telemetry (event volume, detections, identity signal)
-- **Connectors** — a mock data-source inventory (Application / Identity / SIEM / Cloud / Endpoint / Network) with an "Add a Source" flow
+- **Connectors** — a mock data source inventory (Application / Identity / SIEM / Cloud / Endpoint / Network) with an "Add a Source" flow
 - **Rule Library** — sample detection rules with playbook, rule logic, and change history per rule
 - **Findings** — trends shaping SIEM buying decisions right now
-- **Access Control** — role-based access control (RBAC) example: roles, a permissions matrix, and a user list
+- **Access Control** — role based access control (RBAC) example: roles, a permissions matrix, and a user list
 - **Cases** — a sample investigation case study
 - **Insights** — how to actually measure SIEM effectiveness
 - **Recommender** — a guided Q&A that recommends a SIEM approach based on your answers (see [docs/RECOMMENDER-LOGIC.md](docs/RECOMMENDER-LOGIC.md) for the decision tree behind it)
@@ -25,7 +25,7 @@ It's a presentation tool first — every "connector," "rule," and "user" on scre
 
 ## Tech stack
 
-Single self-contained `index.html` — no build step, no dependencies, no framework. Inline CSS and vanilla JS render everything client-side (including small inline SVG charts). This is intentional: it means the whole project can be opened directly in a browser or dropped onto any static host with zero setup.
+Single self contained `index.html` — no build step, no dependencies, no framework. Inline CSS and vanilla JS render everything client side (including small inline SVG charts). This is intentional: it means the whole project can be opened directly in a browser or dropped onto any static host with zero setup.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the page/nav/modal system is put together.
 
@@ -41,9 +41,9 @@ No server, no `npm install` — it's just HTML.
 
 ## Access
 
-The live site is gated behind a simple client-side password prompt (see the `PASSWORD` variable near the top of `<body>` in `index.html`). This is a casual deterrent, not real access control — the source (and the password) is visible to anyone who reads the repo. Treat it accordingly.
+The live site is gated behind a simple client side password prompt (see the `PASSWORD` variable near the top of `<body>` in `index.html`). This is a casual deterrent, not real access control — the source (and the password) is visible to anyone who reads the repo. Treat it accordingly.
 
 ## Docs
 
-- [Architecture](docs/ARCHITECTURE.md) — how the single-file app is structured
-- [Recommender Logic](docs/RECOMMENDER-LOGIC.md) — the checkpoint-by-checkpoint decision tree behind the Recommender page
+- [Architecture](docs/ARCHITECTURE.md) — how the single file app is structured
+- [Recommender Logic](docs/RECOMMENDER-LOGIC.md) — the checkpoint by checkpoint decision tree behind the Recommender page

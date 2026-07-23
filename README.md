@@ -15,12 +15,12 @@ It's a presentation tool first — every "connector," "rule," and "user" on scre
 - **Overview** — session summary and content covered
 - **Dashboard** — sample telemetry (event volume, detections, identity signal)
 - **Connectors** — a mock data-source inventory (Application / Identity / SIEM / Cloud / Endpoint / Network) with an "Add a Source" flow
-- **Rule Library** — sample detection rules with playbook, rule logic, and change history per rule (see [docs/DETECTION-LOGIC.md](docs/DETECTION-LOGIC.md))
+- **Rule Library** — sample detection rules with playbook, rule logic, and change history per rule
 - **Findings** — trends shaping SIEM buying decisions right now
 - **Access Control** — role-based access control (RBAC) example: roles, a permissions matrix, and a user list
 - **Cases** — a sample investigation case study
 - **Insights** — how to actually measure SIEM effectiveness
-- **Recommender** — a guided Q&A that recommends a SIEM approach based on your answers
+- **Recommender** — a guided Q&A that recommends a SIEM approach based on your answers (see [docs/RECOMMENDER-LOGIC.md](docs/RECOMMENDER-LOGIC.md) for the decision tree behind it)
 - **Contact** — takeaways (slides, infographic) and links
 
 ## Tech stack
@@ -46,4 +46,4 @@ The live site is gated behind a simple client-side password prompt (see the `PAS
 ## Docs
 
 - [Architecture](docs/ARCHITECTURE.md) — how the single-file app is structured
-- [Detection Logic](docs/DETECTION-LOGIC.md) — the data model behind the Rule Library page
+- [Recommender Logic](docs/RECOMMENDER-LOGIC.md) — the checkpoint-by-checkpoint decision tree behind the Recommender page

@@ -29,6 +29,10 @@ Single self contained `index.html` — no build step, no dependencies, no framew
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the page/nav/modal system is put together.
 
+### Mobile and PWA
+
+The layout is responsive down to phone width (the sidebar collapses into a slide out drawer under 880px), and the site is installable as a Progressive Web App — `manifest.json` and `service-worker.js` sit alongside `index.html` to enable "Add to Home Screen" and offline caching once served over HTTPS. Both are ignored on a plain `file://` open, service worker registration only runs on HTTPS or localhost, so nothing changes about opening the file directly.
+
 ## Running locally
 
 ```bash

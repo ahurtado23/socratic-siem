@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>SOCratic Method — SIEM Console</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#312e81">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="SOCratic">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -583,6 +591,54 @@
   .user-modal-list-row:first-child{border-top:none;}
   .user-modal-list-row .pct{margin-left:auto;color:var(--ink-faint);font-size:12px;}
   .user-modal-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+  /* ---------- MOBILE / RESPONSIVE ---------- */
+  .mobile-menu-btn{
+    display:none;align-items:center;justify-content:center;
+    width:34px;height:34px;border-radius:8px;border:1px solid var(--border);
+    background:var(--panel);color:var(--ink);cursor:pointer;flex-shrink:0;margin-right:10px;
+  }
+  .mobile-nav-backdrop{display:none;}
+
+  @media(max-width:880px){
+    body{overflow:auto;height:auto;min-height:100vh;}
+    .mobile-menu-btn{display:flex;}
+    .sidebar{
+      position:fixed;top:0;left:0;height:100vh;z-index:300;
+      width:270px;max-width:82vw;
+      transform:translateX(-100%);
+      transition:transform .22s ease;
+      box-shadow:0 0 40px rgba(0,0,0,.25);
+    }
+    body.mobile-nav-open .sidebar{transform:translateX(0);}
+    .mobile-nav-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:250;
+    }
+    body.mobile-nav-open .mobile-nav-backdrop{display:block;}
+    body.mobile-nav-open{overflow:hidden;}
+    .main{width:100%;min-width:0;}
+    .topbar{padding:14px 16px;flex-wrap:wrap;gap:8px;}
+    .topbar-right{gap:10px;}
+    .topbar-time{display:none;}
+    .content{padding:18px 16px 60px 16px;}
+    .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+    .hero{padding:28px 22px;}
+    .hero-title{font-size:32px;}
+    .hero-sub{max-width:100%;}
+    .contact-card{flex-direction:column;align-items:flex-start;padding:28px 22px;}
+    .page-title{font-size:24px;}
+    #rec-root{max-width:100%;}
+    .conn-modal,.rule-modal,.src-modal,.user-modal{max-width:94vw;}
+    .rule-table,.conn-table{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .rule-head-row,.rule-row{min-width:460px;}
+    .conn-head-row,.conn-row{min-width:420px;}
+  }
+
+  @media(max-width:480px){
+    .hero-title{font-size:26px;}
+    .hero-meta{gap:16px;}
+    .content{padding:14px 12px 50px 12px;}
+  }
 </style>
 </head>
 <body>
@@ -680,8 +736,13 @@
   </div>
 </div>
 
+<div class="mobile-nav-backdrop" onclick="toggleMobileNav()"></div>
+
 <div class="main">
   <div class="topbar">
+    <button class="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Toggle menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
     <div class="crumbs">Alex Hurtado's SIEM <span>›</span> <b id="crumbCurrent">Overview</b></div>
     <div class="topbar-right">
       <div class="pill"><span class="dot"></span> Live session</div>
@@ -2019,7 +2080,10 @@ function setVal(key, val){
 
 var stepDefs = {
   objective:{label:"Checkpoint 1 — what's the core objective driving the need for a SIEM?", render:function(){return optionButtons('objective',[['hunting','Proactive threat detection'],['compliance','Compliance']]);}},
-  org_size:{label:'Checkpoint 2 — organization size', render:function(){return optionButtons('org_size',[['lean','Lean, SVB, 5–20%+ data growth YR'],['enterprise','100+ devices, EDR+IAM+Cloud, 250+ GB/day, 2+ person TDIR team']]);}},
+  org_size:{label:'Checkpoint 2 — telemetry footprint', render:function(){return optionButtons('org_size',[
+    ['lean','<b>Focused environment</b><ul style="margin:8px 0 8px 18px;padding:0;font-size:12.5px;color:var(--text-secondary);line-height:1.6;"><li>Limited number of data sources</li><li>User access and cloud activity across a lean SaaS stack</li></ul><div style="font-size:12px;color:var(--text-secondary);"><b style="color:var(--text-primary);">Typical profile:</b> Lean team, tens of GB/day, steady growth.</div>'],
+    ['enterprise','<b>Complex environment</b><ul style="margin:8px 0 8px 18px;padding:0;font-size:12.5px;color:var(--text-secondary);line-height:1.6;"><li>Multiple security domains (Endpoint, Identity, Cloud, SaaS, Network)</li><li>High volume or rapidly growing telemetry</li><li>Diverse log sources across the organization</li></ul><div style="font-size:12px;color:var(--text-secondary);"><b style="color:var(--text-primary);">Typical profile:</b> Hundreds of GB/day+, 100+ devices, and growing telemetry.</div>']
+  ]);}},
   workload:{label:'Tested against: workload tolerance', render:function(){return optionButtons('workload',[['high','High workload — Low $ · team owns most of the operational lift'],['medium','Medium workload — Mid $ · shared effort, platform reduces the lift'],['low','Low workload — High $$$ · managed vendor owns the operational lift']]);}},
   ecosystem:{label:'Checkpoint 3 — ecosystem bundling', render:function(){return optionButtons('ecosystem',[['crowdstrike','Already deep in CrowdStrike'],['google','Already deep in Google'],['microsoft','Already deep in Microsoft'],['paloalto','Already deep in Palo Alto'],['diverse','A diverse, multi vendor stack']]);}},
   detection_eng:{
@@ -2129,7 +2193,7 @@ function renderResult(){
 
 var stepMeta = {
   objective:{num:1, icon:'🎯', title:'The Core Objective', q:"What's the core objective driving the need for a SIEM?", bg:'var(--orange-soft)', ic:'var(--orange-text)'},
-  org_size:{num:2, icon:'🏢', title:'Organization Size', q:'Think about your data profile; daily ingestion volume, and how fast is it growing?', bg:'var(--blue-soft)', ic:'var(--blue-text)'},
+  org_size:{num:2, icon:'🏢', title:'Telemetry Footprint', q:'Think about your logging footprint, not just company size. How much data do you ingest each day, how quickly is it growing, and how many environments and data sources do you need to monitor?', bg:'var(--blue-soft)', ic:'var(--blue-text)'},
   ecosystem:{num:3, icon:'🌐', title:'Ecosystem Bundling', q:"How deep are you already in one vendor's ecosystem?", bg:'var(--purple-soft)', ic:'var(--purple-text)'},
   detection_eng:{num:4, icon:'🔍', title:'Detection Engineering', q:'A gut check on alert volume, quality, and environment.', bg:'var(--amber-soft)', ic:'var(--amber-text)'},
   commitment:{num:5, icon:'🤝', title:'Engineering Commitment', q:'Ready to bring detection engineering in house?', bg:'var(--navy-soft)', ic:'var(--navy)'},
@@ -2503,6 +2567,12 @@ render();
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
     el.classList.add('active');
     document.getElementById('crumbCurrent').textContent = titles[page];
+    document.body.classList.remove('mobile-nav-open');
+    var scroller = document.querySelector('.content');
+    if(scroller) scroller.scrollTop = 0;
+  }
+  function toggleMobileNav(){
+    document.body.classList.toggle('mobile-nav-open');
   }
   function openUserModal(){
     document.getElementById('user-modal-overlay').classList.add('open');
@@ -2515,6 +2585,14 @@ render();
     el.classList.add('active');
     document.querySelectorAll('.user-modal-pane').forEach(function(p){p.classList.remove('active');});
     document.getElementById('user-modal-'+tab).classList.add('active');
+  }
+</script>
+
+<script>
+  if('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('service-worker.js').catch(function(){});
+    });
   }
 </script>
 

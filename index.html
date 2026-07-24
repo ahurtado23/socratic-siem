@@ -629,15 +629,27 @@
     .page-title{font-size:24px;}
     #rec-root{max-width:100%;}
     .conn-modal,.rule-modal,.src-modal,.user-modal{max-width:94vw;}
-    .rule-table,.conn-table{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-    .rule-head-row,.rule-row{min-width:460px;}
-    .conn-head-row,.conn-row{min-width:420px;}
   }
 
   @media(max-width:480px){
     .hero-title{font-size:26px;}
     .hero-meta{gap:16px;}
     .content{padding:14px 12px 50px 12px;}
+  }
+
+  @media(max-width:640px){
+    .rule-head-row,.conn-head-row{display:none;}
+    .rule-row,.conn-row{
+      display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;
+      padding:12px 16px;
+    }
+    .rule-row > *:nth-child(1),.conn-row > *:nth-child(1){flex:0 0 30px;}
+    .rule-row > *:nth-child(2),.conn-row > *:nth-child(2){flex:1 1 100%;min-width:0;}
+    .rule-row > *:nth-child(3){margin-left:40px;}
+    .conn-row > *:nth-child(6){margin-left:40px;}
+    .conn-menu{flex:0 0 auto;margin-left:auto;}
+    .hybrid-pipeline{flex-wrap:wrap;border-radius:12px !important;}
+    .hybrid-pipeline > div{flex:1 1 33.33% !important;min-width:0;padding:10px 4px !important;font-size:10px !important;}
   }
 </style>
 </head>
@@ -860,7 +872,7 @@
           </svg>
           <div style="display:flex;gap:14px;margin-top:8px;font-size:11px;color:var(--ink-muted)">
             <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--chart-2);margin-right:4px"></span>o365</span>
-            <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--chart-1);margin-right:4px"></span>o365-ml</span>
+            <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--chart-1);margin-right:4px"></span>o365 ml</span>
             <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--orange);margin-right:4px"></span>cloudtrail</span>
           </div>
         </div>
@@ -1612,7 +1624,7 @@ renderRuleRows();
         <div>
           <div class="page-eyebrow">Monitor · RBAC Settings</div>
           <h1 class="page-title" style="margin-bottom:6px">Access Control</h1>
-          <div class="page-sub">RBAC settings, roles, and the Best-Fit SIEM Selection behind this environment.</div>
+          <div class="page-sub">RBAC settings, roles, and the Best Fit SIEM Selection behind this environment.</div>
         </div>
         <button style="background:var(--navy);color:#fff;border:none;border-radius:9px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">+ Invite User</button>
       </div>
@@ -1815,7 +1827,7 @@ renderRbacUsers();
             <p style="font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 10px 0;">Summary</p>
             <ul style="margin:0 0 20px 0;padding-left:18px;font-size:13.5px;color:var(--ink);line-height:1.9;">
               <li>At 22:14 UTC, <b>taylor.swift@republic.records</b> (Staff Engineer, Platform) requested a service account token with broad repo read scope.</li>
-              <li>At 22:17 UTC, the endpoint agent observed a 900-byte script written to <code>~/tmp/pull_all.sh</code> looping a repo clone command across the org.</li>
+              <li>At 22:17 UTC, the endpoint agent observed a 900 byte script written to <code>~/tmp/pull_all.sh</code> looping a repo clone command across the org.</li>
               <li>At 22:19 UTC, the client authorized outside the after hours access policy; the fallback rule permitted it under audit only enforcement.</li>
               <li>From 22:20–22:41 UTC, the script cloned 340 private repositories at ~16 requests/minute, totaling 6.8 GB.</li>
               <li>At 22:44 UTC, an unregistered external SSD mounted and received the full archive before unmounting nine minutes later.</li>
@@ -1855,7 +1867,7 @@ renderRbacUsers();
         <div style="background:var(--bg);border-top:1px solid var(--border-soft);padding:18px 24px;">
           <p style="font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 10px 0;">Agentic Investigation Thread</p>
           <div style="background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:10px;">Which other cases has this identity been involved in?</div>
-          <div style="font-size:12.5px;color:var(--ink-muted);line-height:1.6;">No prior involvement in the last 7 days. This is the only high severity case referencing <b>taylor.swift@republic.records</b> — case discovery is bounded to a 7-day window, so older activity isn't visible here.</div>
+          <div style="font-size:12.5px;color:var(--ink-muted);line-height:1.6;">No prior involvement in the last 7 days. This is the only high severity case referencing <b>taylor.swift@republic.records</b> — case discovery is bounded to a 7 day window, so older activity isn't visible here.</div>
         </div>
       </div>
     </div>
@@ -2029,7 +2041,7 @@ function hybridArchitectureHtml(){
   return '<div style="background:var(--surface-2);border:0.5px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1rem">'+
     '<p style="font-weight:600;font-size:16px;margin:0 0 4px;text-align:center">Hybrid Architecture</p>'+
     '<p style="font-size:11.5px;color:var(--text-secondary);margin:0 0 16px;text-align:center">Augment, layered alongside current SIEM</p>'+
-    '<div style="display:flex;background:var(--surface-1);border-radius:20px;overflow:hidden;font-size:10.5px;font-weight:600;margin-bottom:20px;">'+
+    '<div class="hybrid-pipeline" style="display:flex;background:var(--surface-1);border-radius:20px;overflow:hidden;font-size:10.5px;font-weight:600;margin-bottom:20px;">'+
       '<div style="flex:1.1;background:var(--orange);color:#fff;padding:8px 6px;text-align:center;">Collection</div>'+
       '<div style="flex:1.4;background:var(--bg-accent);color:var(--text-accent);padding:8px 6px;text-align:center;">Data Eng. Pipeline</div>'+
       '<div style="flex:1;background:var(--green);color:#fff;padding:8px 6px;text-align:center;">Storage</div>'+

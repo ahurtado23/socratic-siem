@@ -446,6 +446,16 @@
   .conn-modal-validation-item:first-child{border-top:none;}
   .conn-stat-toggle{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;color:var(--ink-muted);cursor:pointer;}
   .conn-stat-toggle.active{background:var(--panel);color:var(--ink);box-shadow:var(--shadow);}
+
+  .range-dd{position:relative;}
+  .range-dd-btn{display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:9px;border:1px solid var(--border);background:var(--panel);font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;user-select:none;}
+  .range-dd-btn.compact{padding:5px 10px;font-size:11.5px;border-radius:7px;}
+  .range-dd-chevron{font-size:10px;color:var(--ink-faint);}
+  .range-dd-menu{display:none;position:absolute;top:calc(100% + 6px);right:0;min-width:160px;background:var(--panel);border:1px solid var(--border);border-radius:10px;box-shadow:0 12px 32px -8px rgba(0,0,0,.25);z-index:30;overflow:hidden;}
+  .range-dd.open .range-dd-menu{display:block;}
+  .range-dd-item{padding:9px 14px;font-size:13px;color:var(--ink-muted);cursor:pointer;}
+  .range-dd-item:hover{background:var(--bg);color:var(--ink);}
+  .range-dd-item.active{color:var(--navy);font-weight:600;background:var(--navy-soft);}
   .conn-attn-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--border-soft);}
   .conn-attn-row:first-child{border-top:none;}
   .conn-attn-ic{width:24px;height:24px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:9px;}
@@ -808,10 +818,21 @@
 
     <!-- ================= DASHBOARD ================= -->
     <div class="page" id="page-dashboard">
-      <div class="page-head">
-        <div class="page-eyebrow">Monitor · Live Telemetry</div>
-        <h1 class="page-title">Dashboard</h1>
-        <div class="page-sub">Cross source event volume, detections, and identity signal — last 30 days.</div>
+      <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div>
+          <div class="page-eyebrow">Monitor · Live Telemetry</div>
+          <h1 class="page-title">Dashboard</h1>
+          <div class="page-sub">Cross source event volume, detections, and identity signal.</div>
+        </div>
+        <div class="range-dd" id="range-dd-dash">
+          <div class="range-dd-btn" onclick="toggleRangeDd('range-dd-dash')"><span class="range-dd-label">Last 30 days</span> <span class="range-dd-chevron">▾</span></div>
+          <div class="range-dd-menu">
+            <div class="range-dd-item active" onclick="selectRange('range-dd-dash',this,'Last 30 days')">Last 30 days</div>
+            <div class="range-dd-item" onclick="selectRange('range-dd-dash',this,'Last Month')">Last Month</div>
+            <div class="range-dd-item" onclick="selectRange('range-dd-dash',this,'Last 6 Months')">Last 6 Months</div>
+            <div class="range-dd-item" onclick="selectRange('range-dd-dash',this,'Last Year')">Last Year</div>
+          </div>
+        </div>
       </div>
 
       <div class="grid grid-2">
@@ -1087,10 +1108,21 @@
         <div class="grid grid-3" style="margin-bottom:20px;">
           <div class="card" style="padding:18px;">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-              <div style="font-size:12px;font-weight:700;color:var(--ink-muted);">Data Ingested <span style="font-weight:500;color:var(--ink-faint);">· Last 24H</span></div>
-              <div style="display:flex;gap:2px;background:var(--border-soft);border-radius:8px;padding:2px;">
-                <div class="conn-stat-toggle active" id="conn-ingest-size-btn" onclick="setIngestUnit('size',this)">Size</div>
-                <div class="conn-stat-toggle" id="conn-ingest-events-btn" onclick="setIngestUnit('events',this)">Events</div>
+              <div style="font-size:12px;font-weight:700;color:var(--ink-muted);">Data Ingested</div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <div class="range-dd" id="range-dd-conn">
+                  <div class="range-dd-btn compact" onclick="toggleRangeDd('range-dd-conn')"><span class="range-dd-label">Last 30 days</span> <span class="range-dd-chevron">▾</span></div>
+                  <div class="range-dd-menu">
+                    <div class="range-dd-item active" onclick="selectRange('range-dd-conn',this,'Last 30 days')">Last 30 days</div>
+                    <div class="range-dd-item" onclick="selectRange('range-dd-conn',this,'Last Month')">Last Month</div>
+                    <div class="range-dd-item" onclick="selectRange('range-dd-conn',this,'Last 6 Months')">Last 6 Months</div>
+                    <div class="range-dd-item" onclick="selectRange('range-dd-conn',this,'Last Year')">Last Year</div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:2px;background:var(--border-soft);border-radius:8px;padding:2px;">
+                  <div class="conn-stat-toggle active" id="conn-ingest-size-btn" onclick="setIngestUnit('size',this)">Size</div>
+                  <div class="conn-stat-toggle" id="conn-ingest-events-btn" onclick="setIngestUnit('events',this)">Events</div>
+                </div>
               </div>
             </div>
             <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:10px;">
@@ -1268,6 +1300,20 @@ function renderConnStats(){
     '</div>';
   }).join('') : '<div style="font-size:12px;color:var(--ink-faint);padding:8px 0;">Nothing needs attention right now.</div>';
 }
+function toggleRangeDd(id){
+  document.querySelectorAll('.range-dd').forEach(function(d){ if(d.id!==id) d.classList.remove('open'); });
+  document.getElementById(id).classList.toggle('open');
+}
+function selectRange(id, el, label){
+  var dd = document.getElementById(id);
+  dd.querySelectorAll('.range-dd-item').forEach(function(i){i.classList.remove('active');});
+  el.classList.add('active');
+  dd.querySelector('.range-dd-label').textContent = label;
+  dd.classList.remove('open');
+}
+document.addEventListener('click', function(e){
+  document.querySelectorAll('.range-dd.open').forEach(function(d){ if(!d.contains(e.target)) d.classList.remove('open'); });
+});
 function setIngestUnit(unit, el){
   document.querySelectorAll('.conn-stat-toggle').forEach(function(b){b.classList.remove('active');});
   el.classList.add('active');

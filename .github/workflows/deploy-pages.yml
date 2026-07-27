@@ -33,6 +33,9 @@ jobs:
           fi
           sed -i "s/__SITE_PASSWORD__/${SITE_PASSWORD}/" index.html
 
+      - name: Bust service worker cache
+        run: sed -i "s/__BUILD_ID__/${GITHUB_SHA}/" service-worker.js
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .

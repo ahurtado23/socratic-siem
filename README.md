@@ -45,7 +45,9 @@ No server, no `npm install` — it's just HTML.
 
 ## Access
 
-The live site is gated behind a simple client side password prompt (see the `PASSWORD` variable near the top of `<body>` in `index.html`). This is a casual deterrent, not real access control — the source (and the password) is visible to anyone who reads the repo. Treat it accordingly.
+The live site is gated behind a simple client side password prompt (see the `PASSWORD` variable near the top of `<body>` in `index.html`). The committed source holds a placeholder (`__SITE_PASSWORD__`); the real value lives in the `SITE_PASSWORD` repo secret and is substituted in by [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) at deploy time, so it's not part of the git history. This is still a casual deterrent, not real access control — the check runs client side, so the password is visible in the deployed page's source to anyone who looks. Treat it accordingly.
+
+Opening `index.html` directly (or cloning and running locally) will show the raw `__SITE_PASSWORD__` placeholder instead of a working password gate, since the substitution only happens in CI.
 
 ## Docs
 

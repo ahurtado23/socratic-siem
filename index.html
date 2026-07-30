@@ -2024,7 +2024,7 @@ function pills(list){
 }
 function resultCard(title, vendors, reason, extra){
   return '<div style="background:var(--surface-2);border:0.5px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem">'+
-  '<p style="font-weight:500;font-size:16px;margin:0 0 8px">'+title+'</p>'+(vendors.length?'<div style="margin-bottom:10px">'+pills(vendors)+'</div>':'')+'<p style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin:0">'+reason+'</p>'+(extra?'<p style="font-size:13px;color:var(--text-warning);line-height:1.6;margin:10px 0 0;padding-top:10px;border-top:0.5px solid var(--border)">'+extra+'</p>':'')+
+  '<p style="font-weight:500;font-size:16px;margin:0 0 8px">'+title+'</p>'+(vendors.length?'<div style="margin-bottom:10px">'+pills(vendors)+'</div>':'')+'<p style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin:0">'+reason+'</p>'+(extra?'<div style="font-size:13px;color:var(--text-warning);line-height:1.6;margin:10px 0 0;padding-top:10px;border-top:0.5px solid var(--border)">'+extra+'</div>':'')+
   '</div>';
 }
 function spectrumHtml(note){
@@ -2176,7 +2176,7 @@ var stepDefs = {
       ['Compliance req','Are there any specific MSSP requirements from your procurement, board, or legal team?'],
       ['Tech stack support','Some MSSPs specialize in certain tech stacks and build their business model around them — this is a highly important consideration.'],
       ['Provider region','The closer your MSSP is to your timezone and language, the better. Always shop local here.'],
-      ['Provider model','<b>MSSP vs MDR:</b> MSSP watches and alerts. MDR hunts and — key word — <b>responds</b>.<br><br><b>Pick MSSP if:</b> low risk, business hours coverage is enough, standard alerting fits your environment.<br><br><b>Pick MDR if:</b> you need 24/7, real analyst engagement, and someone who acts on threats, not just flags them.<br><br><b>Watch out:</b> MSSPs go standard/repeatable — great for cost, weak for unique environments. MDR\'s premium only pays off if you\'re actually getting human expertise.<br><br><b>Most orgs:</b> run both — MSSP for broad coverage, MDR for detection/response depth.', true]
+      ['Provider model','<b>MSSP vs MDR:</b> MSSP watches and alerts. MDR hunts and — key word — <b>responds</b>.<br><br><b>Pick MSSP if:</b> low risk, business hours coverage is enough, standard alerting fits your environment.<br><br><b>Pick MDR if:</b> you need 24/7, real analyst engagement, and someone who acts on threats, not just flags them.<br><br><b>Watch out:</b> MSSPs go standard/repeatable — great for cost, weak for unique environments. MDR\'s premium only pays off if you\'re actually getting human expertise.<br><br><b>Best advice:</b> own your security stack, and contract out the support to run it. Many MSSPs and MDRs bring their own proprietary EDR or SIEM along with the engagement — sounds convenient, until quality dips and you need to fire them. They can disable everything on the way out, and you are left holding a bare environment. Whatever you sign, make sure handover is guaranteed: your data, your configs, your detections stay portable and yours, no matter who is watching them next.', true]
     ];
     return '<div style="background:var(--surface-1);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px">'+
       items.map(function(it){return '<div class="sel-crit-item">✅ '+it[0]+'<span class="tip"'+(it[2]?' style="width:320px;left:auto;right:0;"':'')+'>'+it[1]+'</span></div>';}).join('')+
@@ -2228,7 +2228,11 @@ function renderResult(){
   var nativeMap = {crowdstrike:'CrowdStrike', google:'Google', microsoft:'Microsoft', paloalto:'Palo Alto Networks'};
   if(v.ecosystem==='crowdstrike'){
     return resultCard('CrowdStrike', ['CrowdStrike'], 'Industry leading EDR, with NG SIEM (Humio, bolted on) offering it for practically nothing already deep in the EDR.',
-      '<b>Catch:</b> rules aren\'t yours to customize. Great if you want the bundle discount and don\'t need deep control over detection engineering. Less great if custom detection logic matters to you.');
+      '<b>Catch:</b><ul style="margin:8px 0 10px 18px;padding:0;">'+
+      '<li>Managed rules are not yours to tune, most teams end up turning them off entirely</li>'+
+      '<li>Out of the box detections are often broken on arrival</li>'+
+      '<li>Getting your own data back out usually means routing it to S3 first, not a direct API connection</li>'+
+      '</ul>Great if you want the bundle discount and don\'t need deep control over detection engineering. Less great if custom detection logic, or getting your own data back out, matters to you.');
   }
   if(v.ecosystem==='google'){
     return resultCard('Google', ['Chronicle', 'Mandiant'], 'Chronicle (Google SecOps), often bundled with Mandiant threat intel and Workspace/GCP logs — attractive if you\'re already living in Google Cloud. Fully customizable YARA L detections, not vendor managed rules. UDM is a game changer.',

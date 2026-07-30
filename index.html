@@ -1973,9 +1973,12 @@ renderRbacUsers();
 
 <div id="step-container" style="min-height:260px"></div>
 
-<div style="display:flex;justify-content:space-between;margin-top:20px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:10px;flex-wrap:wrap;">
 <button id="back-btn" onclick="goBack()" style="background:var(--surface-1);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer;">← Back</button>
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+<button onclick="jumpToDetectionEng()" style="background:var(--purple);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;">Assess Detection Engineering</button>
 <button onclick="resetAll()" style="opacity:.6;background:var(--surface-1);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer;">Start over</button>
+</div>
 </div>
 
 </div>
@@ -2318,6 +2321,11 @@ function goBack(){
   var steps = visibleSteps();
   var idx = steps.indexOf(currentStepId);
   if(idx > 0){ currentStepId = steps[idx-1]; }
+  render();
+}
+function jumpToDetectionEng(){
+  if(visibleSteps().indexOf('detection_eng') === -1) return;
+  currentStepId = 'detection_eng';
   render();
 }
 function resetAll(){

@@ -1999,10 +1999,8 @@ function visibleSteps(){
       s.push('workload');
     } else if(state.org_size==='enterprise'||state.org_size===null){
       s.push('ecosystem');
-      if(state.ecosystem!==null){
-        s.push('detection_eng');
-      }
       if(state.ecosystem==='diverse'){
+        s.push('detection_eng');
         s.push('commitment');
         if(state.commitment==='outsource'){
           s.push('selection_criteria');

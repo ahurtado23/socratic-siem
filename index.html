@@ -2241,8 +2241,9 @@ function renderResult(){
       '<b>Catch:</b><ul style="margin:8px 0 10px 18px;padding:0;">'+
       '<li>Managed rules are not yours to tune, most teams end up turning them off entirely</li>'+
       '<li>Out of the box detections are often broken on arrival</li>'+
-      '<li>Getting your own data back out usually means routing it to S3 first, not a direct API connection</li>'+
-      '</ul>Great if you want the bundle discount and don\'t need deep control over detection engineering. Less great if custom detection logic, or getting your own data back out, matters to you.') + fitCheckHtml('If alert quality felt shaky, that tracks with Falcon\'s managed rules being hard to tune, most teams turn them off entirely. If environment answers pointed to non native sources being a struggle, that is the S3 workaround biting you. Worth building out your own detection layer, or reconsidering fit, before calling this settled.');
+      '<li>APIs are the real friction point: some sources are OOTB, but others, Microsoft Intune included, take significant roundtrip work to get in</li>'+
+      '<li>No real open API for bringing in fully custom sources</li>'+
+      '</ul>Great if you want the bundle discount and don\'t need deep control over detection engineering. Less great if custom detection logic, or bringing in sources beyond CrowdStrike\'s own, matters to you.') + fitCheckHtml('If alert quality felt shaky, that tracks with Falcon\'s managed rules being hard to tune, most teams turn them off entirely. If environment answers pointed to non native sources being a struggle, that is the API roundtrip work biting you, not your team. Worth building out your own detection layer, or reconsidering fit, before calling this settled.');
   }
   if(v.ecosystem==='google'){
     return resultCard('Google', ['Chronicle', 'Mandiant'], 'Chronicle (Google SecOps), often bundled with Mandiant threat intel and Workspace/GCP logs — attractive if you\'re already living in Google Cloud. Fully customizable YARA L detections, not vendor managed rules. UDM is a game changer.',

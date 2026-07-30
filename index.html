@@ -1976,7 +1976,7 @@ renderRbacUsers();
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:10px;flex-wrap:wrap;">
 <button id="back-btn" onclick="goBack()" style="background:var(--surface-1);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer;">← Back</button>
 <div style="display:flex;gap:10px;flex-wrap:wrap;">
-<button onclick="jumpToDetectionEng()" style="background:var(--purple);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;">Assess Detection Engineering</button>
+<button id="assess-de-btn" onclick="jumpToDetectionEng()" style="display:none;background:var(--purple);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;">Assess Detection Engineering</button>
 <button onclick="resetAll()" style="opacity:.6;background:var(--surface-1);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer;">Start over</button>
 </div>
 </div>
@@ -2300,6 +2300,7 @@ function render(){
   document.getElementById('progress').textContent = currentStepId==='result' ? 'Result' : 'Step '+(idx+1)+' of '+(steps.length-1);
   document.getElementById('progress-bar').style.width = Math.round(((idx+1)/steps.length)*100)+'%';
   document.getElementById('back-btn').style.visibility = idx>0 ? 'visible' : 'hidden';
+  document.getElementById('assess-de-btn').style.display = (currentStepId==='result' && ['crowdstrike','paloalto','microsoft'].indexOf(state.ecosystem)!==-1) ? 'inline-block' : 'none';
 
   var eyebrow = meta.num ? ('Checkpoint '+meta.num) : (currentStepId==='result' ? 'Result' : 'Follow up');
   var header = '<div class="rec-checkpoint'+(meta.num?'':' sub')+'" style="background:'+meta.bg+'">'+

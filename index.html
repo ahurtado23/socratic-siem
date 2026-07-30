@@ -2024,10 +2024,10 @@ function visibleSteps(){
 function pills(list){
   return list.map(function(v){return '<span style="font-size:12px;font-weight:500;background:var(--bg-accent);color:var(--text-accent);padding:4px 10px;border-radius:var(--radius);margin-right:6px;display:inline-block;margin-bottom:6px">'+v+'</span>';}).join('');
 }
-function fitCheckHtml(){
+function fitCheckHtml(text){
   return '<div style="background:var(--surface-2);border:0.5px dashed var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;">'+
     '<p style="font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--text-secondary);margin:0 0 6px;">Quality check before you settle here</p>'+
-    '<p style="font-size:13px;color:var(--text-primary);line-height:1.6;margin:0;">Go back to what you just answered on alert volume, alert quality, and environment. If any of those felt shaky, that is usually not on your team, it is this ecosystem thinning out past its own sources. Worth optimizing or walking away from before you call this settled.</p>'+
+    '<p style="font-size:13px;color:var(--text-primary);line-height:1.6;margin:0;">'+text+'</p>'+
   '</div>';
 }
 function resultCard(title, vendors, reason, extra){
@@ -2241,19 +2241,19 @@ function renderResult(){
       '<li>Managed rules are not yours to tune, most teams end up turning them off entirely</li>'+
       '<li>Out of the box detections are often broken on arrival</li>'+
       '<li>Getting your own data back out usually means routing it to S3 first, not a direct API connection</li>'+
-      '</ul>Great if you want the bundle discount and don\'t need deep control over detection engineering. Less great if custom detection logic, or getting your own data back out, matters to you.') + fitCheckHtml();
+      '</ul>Great if you want the bundle discount and don\'t need deep control over detection engineering. Less great if custom detection logic, or getting your own data back out, matters to you.') + fitCheckHtml('If alert quality felt shaky, that tracks with Falcon\'s managed rules being hard to tune, most teams turn them off entirely. If environment answers pointed to non native sources being a struggle, that is the S3 workaround biting you. Worth building out your own detection layer, or reconsidering fit, before calling this settled.');
   }
   if(v.ecosystem==='google'){
     return resultCard('Google', ['Chronicle', 'Mandiant'], 'Chronicle (Google SecOps), often bundled with Mandiant threat intel and Workspace/GCP logs — attractive if you\'re already living in Google Cloud. Fully customizable YARA L detections, not vendor managed rules. UDM is a game changer.',
-      '<b>Catch:</b> Community sentiment is mixed; documentation gaps, a clunky UI. Growing pains with the product are common, working with support to fix issues can be a challenge.') + fitCheckHtml();
+      '<b>Catch:</b> Community sentiment is mixed; documentation gaps, a clunky UI. Growing pains with the product are common, working with support to fix issues can be a challenge.') + fitCheckHtml('If alert quality or environment answers felt shaky, that tracks with Chronicle\'s growing pains outside a clean Google Cloud environment, and the documentation gaps that come with it. Worth pushing further into UDM customization before assuming this is not working.');
   }
   if(v.ecosystem==='microsoft'){
     return resultCard('Microsoft', ['Sentinel'], 'If you\'re on any E5/A5/F5/G5 plan, Sentinel starts strong: Entra ID, O365 audit logs, and Azure Activity logs ingest free up to 5gb/user/day, with 90 days retention included. Beyond that, you pay and retention splits into interactive (full KQL) vs. long term (search jobs required first). KQL itself is a genuinely powerful query language.',
-      '<b>Catch:</b> cost can climb fast · setup/tuning complexity<br>Ingestion pricing balloons if sources aren\'t filtered upfront. Model your volume before committing to a tier, and trial in parallel with an alternative for 30 days.<br><br><b>Edge in Microsoft\'s favor:</b> massive community. Setup is often assembly, not build from scratch.') + fitCheckHtml();
+      '<b>Catch:</b> cost can climb fast · setup/tuning complexity<br>Ingestion pricing balloons if sources aren\'t filtered upfront. Model your volume before committing to a tier, and trial in parallel with an alternative for 30 days.<br><br><b>Edge in Microsoft\'s favor:</b> massive community. Setup is often assembly, not build from scratch.') + fitCheckHtml('If alert volume or environment answers felt shaky, that is usually unfiltered ingestion driving cost and noise, not a real Sentinel limitation. Worth a tuning pass on your data sources before reconsidering fit.');
   }
   if(v.ecosystem==='paloalto'){
     return resultCard('Palo Alto Networks', ['Cortex XSIAM'], 'Cortex XSIAM is an EDR based SIEM, not a traditional one — the value doesn\'t come from using it as a log store. Makes sense if you\'re already running Cortex XDR + Palo Alto firewalls + Prisma: native ingestion, close to plug and play.',
-      '<b>Catch:</b> bringing in third party logs means writing your own parsers and rules. Sentiment is split — some find it genuinely powerful once you buy into the platform\'s way of doing things; others call it still beta quality, with case aggregation more cosmetic than functional. Palo Alto won\'t sell it without professional services to deploy it.<br><br>If you intend to use it as a traditional SIEM, go elsewhere.<br>If you want to run a third party EDR alongside it, you\'re in for a mediocre and expensive time.<br>If you embrace the transformation and accept you\'ll need to do things the way the platform wants, it\'s quite powerful.') + fitCheckHtml();
+      '<b>Catch:</b> bringing in third party logs means writing your own parsers and rules. Sentiment is split — some find it genuinely powerful once you buy into the platform\'s way of doing things; others call it still beta quality, with case aggregation more cosmetic than functional. Palo Alto won\'t sell it without professional services to deploy it.<br><br>If you intend to use it as a traditional SIEM, go elsewhere.<br>If you want to run a third party EDR alongside it, you\'re in for a mediocre and expensive time.<br>If you embrace the transformation and accept you\'ll need to do things the way the platform wants, it\'s quite powerful.') + fitCheckHtml('If alert quality or environment answers felt shaky, that tracks with XSIAM\'s handling of third party logs, real work to parse and rule yourself. Worth confirming you are ready to do things the platform\'s way before calling this settled.');
   }
   if(v.ecosystem!=='diverse'){
     var native = nativeMap[v.ecosystem];

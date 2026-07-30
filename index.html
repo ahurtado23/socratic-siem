@@ -2316,9 +2316,9 @@ function render(){
 function goNext(){
   if(currentStepId==='detection_eng' && detourFromResult){
     detourFromResult = false;
-    currentStepId = 'result';
-    render();
-    return;
+    state.objective = 'hunting';
+    state.org_size = 'enterprise';
+    state.ecosystem = 'diverse';
   }
   var steps = visibleSteps();
   var idx = steps.indexOf(currentStepId);

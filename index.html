@@ -1996,8 +1996,10 @@ function visibleSteps(){
       s.push('workload');
     } else if(state.org_size==='enterprise'||state.org_size===null){
       s.push('ecosystem');
-      if(state.ecosystem==='diverse'){
+      if(state.ecosystem!==null){
         s.push('detection_eng');
+      }
+      if(state.ecosystem==='diverse'){
         s.push('commitment');
         if(state.commitment==='outsource'){
           s.push('selection_criteria');
@@ -2021,6 +2023,12 @@ function visibleSteps(){
 
 function pills(list){
   return list.map(function(v){return '<span style="font-size:12px;font-weight:500;background:var(--bg-accent);color:var(--text-accent);padding:4px 10px;border-radius:var(--radius);margin-right:6px;display:inline-block;margin-bottom:6px">'+v+'</span>';}).join('');
+}
+function fitCheckHtml(){
+  return '<div style="background:var(--surface-2);border:0.5px dashed var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;">'+
+    '<p style="font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--text-secondary);margin:0 0 6px;">Quality check before you settle here</p>'+
+    '<p style="font-size:13px;color:var(--text-primary);line-height:1.6;margin:0;">Go back to what you just answered on alert volume, alert quality, and environment. If any of those felt shaky, that is usually not on your team, it is this ecosystem thinning out past its own sources. Worth optimizing or walking away from before you call this settled.</p>'+
+  '</div>';
 }
 function resultCard(title, vendors, reason, extra){
   return '<div style="background:var(--surface-2);border:0.5px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem">'+
@@ -2158,6 +2166,7 @@ var stepDefs = {
     label:'Checkpoint 4 — detection engineering',
     render:function(){return '<div style="background:var(--surface-1);border-radius:var(--radius);padding:16px;margin-bottom:14px">'+
       '<p style="font-size:13.5px;font-weight:600;color:var(--text-primary);margin:0 0 12px">Time for a gut check. Take a real look at where your team actually stands.</p>'+
+      '<p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0 0 12px">If you are already deep in an ecosystem player, quality check it here too. CrowdStrike, Palo Alto, and Microsoft are strong for their own sources, and noticeably weaker once you bring in anything outside that ecosystem. If any of the three signals below feel shaky, that is usually the tell that it is time to optimize or replace, not a reason to assume your team is doing something wrong.</p>'+
       '<p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0 0 10px"><b style="color:var(--text-primary)">Alert volume</b> — can your team keep up with what\'s coming in, or are you drowning?</p>'+
       '<p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0 0 10px"><b style="color:var(--text-primary)">Alert quality</b> — of that volume, how much is signal? Healthy FP rate, precision, recall?</p>'+
       '<p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0"><b style="color:var(--text-primary)">Environment</b> — is your source landscape outgrowing what you started with? More diversity, more non native sources, more custom apps to cover?</p>'+
@@ -2232,19 +2241,19 @@ function renderResult(){
       '<li>Managed rules are not yours to tune, most teams end up turning them off entirely</li>'+
       '<li>Out of the box detections are often broken on arrival</li>'+
       '<li>Getting your own data back out usually means routing it to S3 first, not a direct API connection</li>'+
-      '</ul>Great if you want the bundle discount and don\'t need deep control over detection engineering. Less great if custom detection logic, or getting your own data back out, matters to you.');
+      '</ul>Great if you want the bundle discount and don\'t need deep control over detection engineering. Less great if custom detection logic, or getting your own data back out, matters to you.') + fitCheckHtml();
   }
   if(v.ecosystem==='google'){
     return resultCard('Google', ['Chronicle', 'Mandiant'], 'Chronicle (Google SecOps), often bundled with Mandiant threat intel and Workspace/GCP logs — attractive if you\'re already living in Google Cloud. Fully customizable YARA L detections, not vendor managed rules. UDM is a game changer.',
-      '<b>Catch:</b> Community sentiment is mixed; documentation gaps, a clunky UI. Growing pains with the product are common, working with support to fix issues can be a challenge.');
+      '<b>Catch:</b> Community sentiment is mixed; documentation gaps, a clunky UI. Growing pains with the product are common, working with support to fix issues can be a challenge.') + fitCheckHtml();
   }
   if(v.ecosystem==='microsoft'){
     return resultCard('Microsoft', ['Sentinel'], 'If you\'re on any E5/A5/F5/G5 plan, Sentinel starts strong: Entra ID, O365 audit logs, and Azure Activity logs ingest free up to 5gb/user/day, with 90 days retention included. Beyond that, you pay and retention splits into interactive (full KQL) vs. long term (search jobs required first). KQL itself is a genuinely powerful query language.',
-      '<b>Catch:</b> cost can climb fast · setup/tuning complexity<br>Ingestion pricing balloons if sources aren\'t filtered upfront. Model your volume before committing to a tier, and trial in parallel with an alternative for 30 days.<br><br><b>Edge in Microsoft\'s favor:</b> massive community. Setup is often assembly, not build from scratch.');
+      '<b>Catch:</b> cost can climb fast · setup/tuning complexity<br>Ingestion pricing balloons if sources aren\'t filtered upfront. Model your volume before committing to a tier, and trial in parallel with an alternative for 30 days.<br><br><b>Edge in Microsoft\'s favor:</b> massive community. Setup is often assembly, not build from scratch.') + fitCheckHtml();
   }
   if(v.ecosystem==='paloalto'){
     return resultCard('Palo Alto Networks', ['Cortex XSIAM'], 'Cortex XSIAM is an EDR based SIEM, not a traditional one — the value doesn\'t come from using it as a log store. Makes sense if you\'re already running Cortex XDR + Palo Alto firewalls + Prisma: native ingestion, close to plug and play.',
-      '<b>Catch:</b> bringing in third party logs means writing your own parsers and rules. Sentiment is split — some find it genuinely powerful once you buy into the platform\'s way of doing things; others call it still beta quality, with case aggregation more cosmetic than functional. Palo Alto won\'t sell it without professional services to deploy it.<br><br>If you intend to use it as a traditional SIEM, go elsewhere.<br>If you want to run a third party EDR alongside it, you\'re in for a mediocre and expensive time.<br>If you embrace the transformation and accept you\'ll need to do things the way the platform wants, it\'s quite powerful.');
+      '<b>Catch:</b> bringing in third party logs means writing your own parsers and rules. Sentiment is split — some find it genuinely powerful once you buy into the platform\'s way of doing things; others call it still beta quality, with case aggregation more cosmetic than functional. Palo Alto won\'t sell it without professional services to deploy it.<br><br>If you intend to use it as a traditional SIEM, go elsewhere.<br>If you want to run a third party EDR alongside it, you\'re in for a mediocre and expensive time.<br>If you embrace the transformation and accept you\'ll need to do things the way the platform wants, it\'s quite powerful.') + fitCheckHtml();
   }
   if(v.ecosystem!=='diverse'){
     var native = nativeMap[v.ecosystem];
@@ -2267,7 +2276,7 @@ var stepMeta = {
   objective:{num:1, icon:'🎯', title:'The Core Objective', q:"What's the core objective driving the need for a SIEM?", bg:'var(--orange-soft)', ic:'var(--orange-text)'},
   org_size:{num:2, icon:'🏢', title:'Telemetry Footprint', q:'Think about your logging footprint, not just company size. How much data do you ingest each day, how quickly is it growing, and how many environments and data sources do you need to monitor?', bg:'var(--blue-soft)', ic:'var(--blue-text)'},
   ecosystem:{num:3, icon:'🌐', title:'Ecosystem Bundling', q:"How deep are you already in one vendor's ecosystem?", bg:'var(--purple-soft)', ic:'var(--purple-text)'},
-  detection_eng:{num:4, icon:'🔍', title:'Detection Engineering', q:'A gut check on alert volume, quality, and environment.', bg:'var(--amber-soft)', ic:'var(--amber-text)'},
+  detection_eng:{num:4, icon:'🔍', title:'Detection Engineering', q:'The road usually leads back here. A gut check on alert volume, quality, and environment, whether you are picking a SIEM for the first time or quality checking the one you already have.', bg:'var(--amber-soft)', ic:'var(--amber-text)'},
   commitment:{num:5, icon:'🤝', title:'Engineering Commitment', q:'Ready to bring detection engineering in house?', bg:'var(--navy-soft)', ic:'var(--navy)'},
   rebuild:{num:6, icon:'⚙️', title:'Optimize or Rebuild?', q:'Stuck with legacy, or open to starting fresh?', bg:'var(--green-soft)', ic:'var(--green-text)'},
   speed:{num:7, icon:'⚡', title:'Real Time Detection at Ingest', q:'Is real time detection a hard requirement?', bg:'var(--red-soft)', ic:'var(--red-text)'},

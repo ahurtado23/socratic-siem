@@ -48,18 +48,20 @@ This is terminal — no further checkpoints for the lean path.
 
 | Answer | Route |
 |---|---|
-| Already deep in CrowdStrike | → **Ending: Native Ecosystem (CrowdStrike)** |
-| Already deep in Google | → **Ending: Native Ecosystem (Google)** |
-| Already deep in Microsoft | → **Ending: Native Ecosystem (Microsoft)** |
-| Already deep in Palo Alto | → **Ending: Native Ecosystem (Palo Alto Networks)** |
-| A diverse, multi vendor stack | → Checkpoint 4 |
+| Already deep in CrowdStrike | → Checkpoint 4, then **Ending: Native Ecosystem (CrowdStrike)** |
+| Already deep in Google | → Checkpoint 4, then **Ending: Native Ecosystem (Google)** |
+| Already deep in Microsoft | → Checkpoint 4, then **Ending: Native Ecosystem (Microsoft)** |
+| Already deep in Palo Alto | → Checkpoint 4, then **Ending: Native Ecosystem (Palo Alto Networks)** |
+| A diverse, multi vendor stack | → Checkpoint 4, then continues to Checkpoint 5 |
 
 ### Ending: Take Advantage of the Ecosystem Bundling
-Final recommendation, terminal — no further checkpoints needed once one ecosystem already dominates the stack. The more committed you already are, the harder it is to justify going elsewhere.
+Final recommendation once Checkpoint 4 is cleared — no further checkpoints needed once one ecosystem already dominates the stack, but the fit still gets quality checked first. Each native ecosystem ending closes with a fit check callout tied back to what was just answered in Checkpoint 4: CrowdStrike, Palo Alto, and Microsoft are strong for their own sources and noticeably weaker outside them, so a shaky answer on alert volume, alert quality, or environment is the tell that it is time to optimize or replace, not proof the team is doing something wrong.
 
 ---
 
 ## Checkpoint 4 — Detection Engineering Readiness (diagnostic, no branch)
+
+Every ecosystem answer routes through here now, native or diverse. This is the checkpoint the road usually leads back to: a first time buyer uses it as a readiness gut check, someone already on a native ecosystem platform uses the same three questions as a fit quality check before accepting that ecosystem bundling is the final answer.
 
 **Framing:** *Time for a gut check. Take a real look at where your team actually stands.*
 
@@ -187,7 +189,7 @@ Most cost effective path available, but genuinely more DIY.
     │   ├── Medium → [END: Integrated AI SOC]
     │   └── Low    → [END: MDR]
     └── Enterprise → 3. Ecosystem
-        ├── Native (CS/Google/MSFT/PA) → [END: Native Ecosystem]
+        ├── Native (CS/Google/MSFT/PA) → 4. Detection Eng Readiness (fit check) → [END: Native Ecosystem]
         └── Diverse → 4. Detection Eng Readiness (info only) → 5. Commitment
             ├── Outsource → [END: Fully Managed SIEM Players / MDR alt]
             └── In-house → 6. Optimize or Rebuild

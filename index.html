@@ -1989,6 +1989,7 @@ var state = {
   commitment:null, rebuild:null, speed:null, speed_tier:null, cloud_hybrid:null
 };
 var currentStepId = 'objective';
+var detourFromResult = false;
 
 function visibleSteps(){
   var s = [];
@@ -2291,15 +2292,16 @@ var stepMeta = {
 
 function render(){
   var steps = visibleSteps();
-  if(steps.indexOf(currentStepId)===-1) currentStepId = steps[0];
+  if(steps.indexOf(currentStepId)===-1 && !(currentStepId==='detection_eng' && detourFromResult)) currentStepId = steps[0];
   var idx = steps.indexOf(currentStepId);
   var def = stepDefs[currentStepId];
   var meta = stepMeta[currentStepId];
+  var inDetour = (currentStepId==='detection_eng' && detourFromResult);
 
-  document.getElementById('progress').textContent = currentStepId==='result' ? 'Result' : 'Step '+(idx+1)+' of '+(steps.length-1);
-  document.getElementById('progress-bar').style.width = Math.round(((idx+1)/steps.length)*100)+'%';
-  document.getElementById('back-btn').style.visibility = idx>0 ? 'visible' : 'hidden';
-  document.getElementById('assess-de-btn').style.display = (currentStepId==='result' && ['crowdstrike','paloalto','microsoft','google'].indexOf(state.ecosystem)!==-1) ? 'inline-block' : 'none';
+  document.getElementById('progress').textContent = currentStepId==='result' ? 'Result' : (inDetour ? 'Follow up' : 'Step '+(idx+1)+' of '+(steps.length-1));
+  document.getElementById('progress-bar').style.width = inDetour ? '100%' : Math.round(((idx+1)/steps.length)*100)+'%';
+  document.getElementById('back-btn').style.visibility = (idx>0 || inDetour) ? 'visible' : 'hidden';
+  document.getElementById('assess-de-btn').style.display = (currentStepId==='result') ? 'inline-block' : 'none';
 
   var eyebrow = meta.num ? ('Checkpoint '+meta.num) : (currentStepId==='result' ? 'Result' : 'Follow up');
   var header = '<div class="rec-checkpoint'+(meta.num?'':' sub')+'" style="background:'+meta.bg+'">'+
@@ -2312,19 +2314,31 @@ function render(){
   c.innerHTML = header + def.render();
 }
 function goNext(){
+  if(currentStepId==='detection_eng' && detourFromResult){
+    detourFromResult = false;
+    currentStepId = 'result';
+    render();
+    return;
+  }
   var steps = visibleSteps();
   var idx = steps.indexOf(currentStepId);
   if(idx < steps.length-1){ currentStepId = steps[idx+1]; }
   render();
 }
 function goBack(){
+  if(currentStepId==='detection_eng' && detourFromResult){
+    detourFromResult = false;
+    currentStepId = 'result';
+    render();
+    return;
+  }
   var steps = visibleSteps();
   var idx = steps.indexOf(currentStepId);
   if(idx > 0){ currentStepId = steps[idx-1]; }
   render();
 }
 function jumpToDetectionEng(){
-  if(visibleSteps().indexOf('detection_eng') === -1) return;
+  detourFromResult = true;
   currentStepId = 'detection_eng';
   render();
 }
@@ -2332,6 +2346,7 @@ function resetAll(){
   state = {objective:null, org_size:null, workload:null, ecosystem:null,
     commitment:null, rebuild:null, speed:null, speed_tier:null, cloud_hybrid:null};
   currentStepId = 'objective';
+  detourFromResult = false;
   render();
 }
 render();

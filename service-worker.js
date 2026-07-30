@@ -1,4 +1,4 @@
-const CACHE_NAME = 'socratic-siem-v1';
+const CACHE_NAME = 'socratic-siem-__BUILD_ID__';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', function(event){

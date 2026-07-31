@@ -1748,7 +1748,7 @@ renderRuleRows();
         <p style="font-size:13px;color:var(--ink-muted);line-height:1.6;max-width:680px;margin:0 0 18px;">Every SIEM flavor on the market breaks down along two axes: how it is architected, and who operates it. Any architecture below can pair with any operating model, a Traditional SIEM run by an MSSP is just as real as a self run Integrated AI SOC.</p>
 
         <p style="font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 10px;">Architecture</p>
-        <div class="grid grid-3" style="margin-bottom:24px;">
+        <div class="grid grid-2" style="margin-bottom:24px;">
           <div class="card finding-card">
             <div class="finding-top"><div class="finding-ic" style="background:var(--blue-soft);">🏛️</div><div class="finding-title">Traditional</div></div>
             <div class="finding-body">Monolithic: collection, storage, and analytics live under one roof. Platformization vendors live here, and the innovator's dilemma bites, expand into adjacent categories and get worse at the one thing you were originally best at.</div>
@@ -1760,6 +1760,10 @@ renderRuleRows();
           <div class="card finding-card">
             <div class="finding-top"><div class="finding-ic" style="background:var(--purple-soft);">🤖</div><div class="finding-title">Integrated AI SOC</div></div>
             <div class="finding-body">Newer models, ingest into ClickHouse style backends, agentic orchestration across onboarding, normalization, tuning, and case management. Some ship a SOAR lite mesh built in.</div>
+          </div>
+          <div class="card finding-card">
+            <div class="finding-top"><div class="finding-ic" style="background:var(--green-soft);">🔎</div><div class="finding-title">Federated Search</div></div>
+            <div class="finding-body">Query data where it already lives, across cloud logs, data lakes, and endpoint stores, nothing centralizes or duplicates. Trades a single unified index for speed and lower storage cost, correlation across sources takes more work.</div>
           </div>
         </div>
 

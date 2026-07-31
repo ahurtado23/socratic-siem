@@ -2313,7 +2313,7 @@ function render(){
   document.getElementById('progress').textContent = currentStepId==='result' ? 'Result' : (inDetour ? 'Follow up' : 'Step '+(idx+1)+' of '+(steps.length-1));
   document.getElementById('progress-bar').style.width = inDetour ? '100%' : Math.round(((idx+1)/steps.length)*100)+'%';
   document.getElementById('back-btn').style.visibility = (idx>0 || inDetour) ? 'visible' : 'hidden';
-  document.getElementById('assess-de-btn').style.display = (currentStepId==='result') ? 'inline-block' : 'none';
+  document.getElementById('assess-de-btn').style.display = (currentStepId==='result' && state.objective==='hunting') ? 'inline-block' : 'none';
 
   var eyebrow = meta.num ? ('Checkpoint '+meta.num) : (currentStepId==='result' ? 'Result' : 'Follow up');
   var header = '<div class="rec-checkpoint'+(meta.num?'':' sub')+'" style="background:'+meta.bg+'">'+

@@ -1478,40 +1478,44 @@ renderConnStats();
             <div style="width:26px;height:26px;border-radius:7px;background:#007DC122;color:#007DC1;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">OK</div>
             <span style="color:var(--ink-faint);font-size:12px;">→</span>
             <div class="rule-sev" style="background:var(--orange-soft);color:var(--orange-text);">High</div>
-            <span style="margin-left:auto;font-size:10px;color:var(--ink-faint);">46 events/hr</span>
+            <button style="margin-left:auto;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap;">✓ Accept &amp; Deploy</button>
           </div>
           <div style="font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:4px;">Impossible Travel — Okta Sign in</div>
-          <div style="font-size:12px;color:var(--ink-muted);line-height:1.5;">Okta is your busiest identity feed. Sign in anomaly coverage is the highest leverage rule you can run on it.</div>
+          <div style="font-size:12px;color:var(--ink-muted);line-height:1.5;margin-bottom:10px;">Okta is your busiest identity feed. Sign in anomaly coverage is the highest leverage rule you can run on it.</div>
+          <div style="text-align:right;font-size:10.5px;color:var(--ink-faint);">Data source: <b style="color:var(--ink-muted);">Okta</b></div>
         </div>
         <div class="card" style="padding:16px;">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
             <div style="width:26px;height:26px;border-radius:7px;background:#E01F2722;color:#E01F27;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">CS</div>
             <span style="color:var(--ink-faint);font-size:12px;">→</span>
             <div class="rule-sev" style="background:var(--red-soft);color:var(--red-text);">Critical</div>
-            <span style="margin-left:auto;font-size:10px;color:var(--ink-faint);">54 events/hr</span>
+            <button style="margin-left:auto;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap;">✓ Accept &amp; Deploy</button>
           </div>
           <div style="font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:4px;">CrowdStrike: Suspicious LSASS Access</div>
-          <div style="font-size:12px;color:var(--ink-muted);line-height:1.5;">Falcon is actively streaming EDR telemetry. LSASS access is the precursor most credential dumping shares.</div>
+          <div style="font-size:12px;color:var(--ink-muted);line-height:1.5;margin-bottom:10px;">Falcon is actively streaming EDR telemetry. LSASS access is the precursor most credential dumping shares.</div>
+          <div style="text-align:right;font-size:10.5px;color:var(--ink-faint);">Data source: <b style="color:var(--ink-muted);">CrowdStrike Falcon</b></div>
         </div>
         <div class="card" style="padding:16px;">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
             <div style="width:26px;height:26px;border-radius:7px;background:#FF990022;color:#FF9900;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">AWS</div>
             <span style="color:var(--ink-faint);font-size:12px;">→</span>
             <div class="rule-sev" style="background:var(--orange-soft);color:var(--orange-text);">High</div>
-            <span style="margin-left:auto;font-size:10px;color:var(--ink-faint);">88 events/hr</span>
+            <button style="margin-left:auto;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap;">✓ Accept &amp; Deploy</button>
           </div>
           <div style="font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:4px;">AWS CloudTrail: IAM Privilege Escalation</div>
-          <div style="font-size:12px;color:var(--ink-muted);line-height:1.5;">CloudTrail is your highest volume feed. Privilege escalation is the misconfiguration attackers reach for first.</div>
+          <div style="font-size:12px;color:var(--ink-muted);line-height:1.5;margin-bottom:10px;">CloudTrail is your highest volume feed. Privilege escalation is the misconfiguration attackers reach for first.</div>
+          <div style="text-align:right;font-size:10.5px;color:var(--ink-faint);">Data source: <b style="color:var(--ink-muted);">AWS CloudTrail</b></div>
         </div>
         <div class="card" style="padding:16px;">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
             <div style="width:26px;height:26px;border-radius:7px;background:#FA582D22;color:#FA582D;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">PA</div>
             <span style="color:var(--ink-faint);font-size:12px;">→</span>
             <div class="rule-sev" style="background:var(--red-soft);color:var(--red-text);">Critical</div>
-            <span style="margin-left:auto;font-size:10px;color:var(--ink-faint);">71 events/hr</span>
+            <button style="margin-left:auto;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap;">✓ Accept &amp; Deploy</button>
           </div>
           <div style="font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:4px;">Palo Alto: C2 Beacon Detected</div>
-          <div style="font-size:12px;color:var(--ink-muted);line-height:1.5;">Your NGFW sees every egress connection. Beaconing coverage catches command and control before it reaches Endpoint.</div>
+          <div style="font-size:12px;color:var(--ink-muted);line-height:1.5;margin-bottom:10px;">Your NGFW sees every egress connection. Beaconing coverage catches command and control before it reaches Endpoint.</div>
+          <div style="text-align:right;font-size:10.5px;color:var(--ink-faint);">Data source: <b style="color:var(--ink-muted);">Palo Alto Networks</b></div>
         </div>
       </div>
 
